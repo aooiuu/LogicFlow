@@ -29,3 +29,18 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/.vuepress/dist
 
+      - name: deploy to ssh
+        uses: easingthemes/ssh-deploy@v2.0.7
+        env:
+          # 服务器私钥
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
+          ARGS: '-avz --delete'
+          # 来源目录
+          SOURCE: ./docs/.vuepress/dist/
+          # 服务器公网 IP 或域名
+          REMOTE_HOST: ${{ secrets.SERVER_REMOTE_HOST }}
+          # 服务器用户名
+          REMOTE_USER: ${{ secrets.SERVER_REMOTE_USER }}
+          # 服务器目标目录
+          TARGET: ${{ secrets.SERVER_TARGET }}
+
